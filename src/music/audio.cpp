@@ -3,9 +3,8 @@
 #include "music/synth/violin.h"
 
 #include <cmath>
-#include <SDL.h>
-#include <SDL_audio.h>
-#include <SDL2/SDL.h>
+#include "SDLCompat.h"
+
 #include <iostream>
 #include <algorithm> // VS is retarded and can't find this shit
 
@@ -71,8 +70,12 @@ void SoundHandler::stop()
 
 void SoundHandler::add_sound(float freq, int length, InstrumentType instrument)
 {
+
     if (!NOTE::enabled)
+    {
         return;
+    }
+
     if (length <= NOTE::MIN_LENGTH)
         length = NOTE::MIN_LENGTH;
     if (length >= NOTE::MAX_LENGTH)

@@ -369,7 +369,7 @@ tpt.partsdata = nil");
 void LuaScriptInterface::Init()
 {
 	std::cout << "INIT LUA!!!!!!" << std::endl;
-	std::cout << std::__fs::filesystem::current_path().string() << std::endl;
+	//std::cout << std::__fs::filesystem::current_path().string() << std::endl;
 	if(Client::Ref().FileExists("autorun.lua"))
 	{
 		lua_State *l = luacon_ci->l;

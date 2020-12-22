@@ -8,7 +8,7 @@
 #include <direct.h>
 #endif
 #include "SDLCompat.h"
-
+#define _DEBUG
 #ifdef X86_SSE
 #include <xmmintrin.h>
 #endif
@@ -164,12 +164,18 @@ void SDLOpen()
 		fprintf(stderr, "Initializing SDL (video subsystem): %s\n", SDL_GetError());
 		exit(-1);
 	}
+	putenv("SDL_AUDIODRIVER=DirectSound");
 	printf("Initializing SDL Audio...\n");
 	if (SDL_InitSubSystem(SDL_INIT_AUDIO) < 0)
 	{
-		fprintf(stderr, "Initializing SDL Audio: %s\n", SDL_GetError());
-		exit(-1);
+		printf("Initializing SDL Audio: %s\n", SDL_GetError());
+		//exit(-1);
 	}
+	else
+	{
+		printf("Succeeded!!!\n");
+	}
+	putenv("SDL_AUDIODRIVER=DirectSound");
 
 	if (!RecreateWindow())
 	{
@@ -701,6 +707,10 @@ int main(int argc, char *argv[])
 #endif
 	currentWidth = WINDOWW;
 	currentHeight = WINDOWH;
+
+	AllocConsole();
+	freopen("CONOUT$", "w", stdout);
+	std::cout << "This works" << std::endl;
 
 	// https://bugzilla.libsdl.org/show_bug.cgi?id=3796
 	if (SDL_Init(0) < 0)
